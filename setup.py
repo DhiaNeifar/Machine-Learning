@@ -10,10 +10,11 @@ setup(
     python_requires="==3.9.12",
     zip_safe=False,
     include_package_data=True,
-    packages=["WarmUp", "ex1", "PlotData"],
+    packages=["WarmUp", "ex1", "PlotData", "ComputeCost"],
     package_dir={
         "ex1": ".",
         "WarmUp": "./Warmup",
-        "PlotData": "./PlotData"
+        "PlotData": "./PlotData",
+        "ComputeCost": "./ComputeCost"
     }
 )
