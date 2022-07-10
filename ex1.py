@@ -2,6 +2,7 @@ import numpy as np
 
 from WarmUp.WarmUpAssignment import warmup
 from PlotData.plotdata import plot_data
+from PlotData.plotdata import plot_data_1
 from ComputeCost.computeCost import compute_Cost
 from GradientDescent.GradientDescent import gradient_descent
 from utils import n_decimal_places
@@ -63,6 +64,20 @@ def ex1():
     print(f'Theta found by gradient descent: {n_decimal_places(theta[0, 0], 4)} {n_decimal_places(theta[1, 0], 4)}')
     print('Expected theta values (approx) -3.6303 1.1664')
 
+    plot_data_1(X, y, theta)
 
+    print('Predicting values for population sizes of 35, 000 and 70, 000')
+
+    predict1 = np.dot(np.array([[1, 3.5]], dtype=float), theta)
+    print(f'For population = 35,000, we predict a profit of {predict1[0, 0] * 10000}')
+
+    predict2 = np.dot(np.array([[1, 7]], dtype=float), theta)
+    print(f'For population = 70,000, we predict a profit of {predict2[0, 0] * 10000}')
+
+    print('Program paused. Press enter to continue.\n')
+
+    # ============= Part 4: Visualizing J(theta_0, theta_1) =============
+
+    
 if __name__ == '__main__':
     ex1()
