@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-def plot_data(X, y):
+def plot_data(X, y) -> None:
 
     fig = plt.figure()
     plt.scatter(X, y)
