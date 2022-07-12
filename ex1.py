@@ -1,8 +1,7 @@
 import numpy as np
 
 from WarmUp.WarmUpAssignment import warmup
-from PlotData.plotdata import plot_data
-from PlotData.plotdata import plot_data_1
+from PlotData.plotdata import plot_data, plot_data_1, plot_data_surface, plot_data_contour
 from ComputeCost.computeCost import compute_Cost
 from GradientDescent.GradientDescent import gradient_descent
 from utils import n_decimal_places
@@ -69,15 +68,34 @@ def ex1():
     print('Predicting values for population sizes of 35, 000 and 70, 000')
 
     predict1 = np.dot(np.array([[1, 3.5]], dtype=float), theta)
-    print(f'For population = 35,000, we predict a profit of {predict1[0, 0] * 10000}')
+    print(f'For population = 35,000, we predict a profit of {n_decimal_places(predict1[0, 0] * 10000, 5)}')
 
     predict2 = np.dot(np.array([[1, 7]], dtype=float), theta)
-    print(f'For population = 70,000, we predict a profit of {predict2[0, 0] * 10000}')
+    print(f'For population = 70,000, we predict a profit of {n_decimal_places(predict2[0, 0] * 10000, 5)}')
 
     print('Program paused. Press enter to continue.\n')
 
     # ============= Part 4: Visualizing J(theta_0, theta_1) =============
 
-    
+    print('Visualizing J(theta_0, theta_1) ...')
+
+    theta0_vals = np.linspace(-10, 10, 100)
+    theta1_vals = np.linspace(-1, 4, 100)
+
+    J_vals = np.zeros((len(theta0_vals), len(theta1_vals)))
+
+    for i in range(len(theta0_vals)):
+        for j in range(len(theta1_vals)):
+            t = np.zeros((2, 1), dtype=float)
+            t[0, 0] = theta0_vals[i]
+            t[1, 0] = theta1_vals[j]
+            J_vals[i, j] = compute_Cost(X, y, t)
+
+    J_vals = J_vals.T
+    plot_data_surface(theta0_vals, theta1_vals, J_vals)
+
+    plot_data_contour(theta0_vals, theta1_vals, J_vals)
+
+
 if __name__ == '__main__':
     ex1()
