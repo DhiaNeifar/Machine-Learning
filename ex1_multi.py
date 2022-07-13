@@ -1,9 +1,14 @@
 import numpy as np
+import pandas as pd
+
 
 from FeatureScaling.FeatureScaling import featureScaling
+from GradientDescent.GradientDescent import gradient_descent
+from GradientDescent.GradientDescentMulti import gradient_descent_multi
+from PlotData.plotdata import plot_convergence
 
 
-def ex1_mutli():
+def ex1_multi():
 
     """
         Machine Learning Online Class - Exercise 1: Linear Regression With Multiple Variables
@@ -12,27 +17,35 @@ def ex1_mutli():
     # ==================== Part 1: Feature Normalization ====================
 
     print("Loading data ... ")
-    data = np.loadtxt('ex1data2.txt', delimiter=',')
+    col_names = ['house_size', 'br', 'price']
+    data = pd.read_csv('ex1data2.txt', names=col_names, header=None, delimiter=',')
 
-    X1 = np.array([data[:, 0]]).T    # size of the house.
-    X2 = np.array([data[:, 1]]).T    # number of bedrooms.
-    X = np.concatenate((X1, X2), axis=1, dtype=float)
-    y = np.array([data[:, 2]], dtype=float).T     # y: price of the house.
-    m = len(y)                                # m is the number of training examples
+    X = data[['house_size', 'br']]
+    y = data[['price']]
 
     print('First 10 examples from the dataset: ')
-    print(f'X = \n{X[:, :10]}')
-    print(f'y = \n{y[:, :10]}')
+
+    # print(X.head(10))
+    # print(y.head(10))
+
     print('Program paused. Press enter to continue.\n')
     input()
 
     print('Normalizing Features ...')
+    X = featureScaling(X)
+    X['bias'] = [1 for _ in range(len(X))]
+    X = X[['bias', 'house_size', 'br']]
 
-    featureScaling(np.random.rand(5, 3))
-    # % Add intercept term to X
-    # X = [ones(m, 1) X];
+    # ================ Part 2: Gradient Descent ================
 
+    print('Running gradient descent ...')
+    alpha = 0.01
+    num_iter = 400
 
+    theta = np.zeros((3, 1))
+    theta, J_history = gradient_descent_multi(X, y, theta, alpha, num_iter)
+    # print(J_history)
+    plot_convergence(J_history)
 
 
 
@@ -48,4 +61,4 @@ def ex1_mutli():
 
 
 if __name__ == '__main__':
-    ex1_mutli()
+    ex1_multi()

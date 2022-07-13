@@ -1,3 +1,3 @@
-from . import GradientDescent
+from . import GradientDescent, GradientDescentMulti
 
-__all__ = ['GradientDescent']
+__all__ = ['GradientDescent', 'GradientDescentMulti']

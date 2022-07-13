@@ -59,7 +59,7 @@ def ex1():
 
     print('Running Gradient Descent ...')
 
-    theta = gradient_descent(X, y, theta, alpha, iterations)
+    theta, J_history = gradient_descent(X, y, theta, alpha, iterations)
     print(f'Theta found by gradient descent: {n_decimal_places(theta[0, 0], 4)} {n_decimal_places(theta[1, 0], 4)}')
     print('Expected theta values (approx) -3.6303 1.1664')
 

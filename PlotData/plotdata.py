@@ -46,3 +46,14 @@ def plot_data_contour(x, y, Z) -> None:
 
     plt.show()
     plt.close(fig)
+
+
+def plot_convergence(J) -> None:
+
+    fig = plt.figure()
+    plt.plot([i for i in range(len(J))], J[:len(J)], 'b')
+    plt.xlabel('number of iterations')
+    plt.ylabel('Cost function J')
+    plt.waitforbuttonpress(0)  # this will wait for indefinite time
+    plt.close(fig)
+
