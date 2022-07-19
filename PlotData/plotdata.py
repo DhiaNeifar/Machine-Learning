@@ -57,3 +57,13 @@ def plot_convergence(J) -> None:
     plt.waitforbuttonpress(0)  # this will wait for indefinite time
     plt.close(fig)
 
+
+def plot_multi_convergence(J, clrs, alphas):
+    for index, elm in enumerate(J):
+        plt.plot([i for i in range(len(J[index]))], J[index][:len(J[index])], clrs[index], label=f'lr={alphas[index]}')
+    plt.xlabel("number of iterations")
+    plt.ylabel("Cost function")
+    plt.title("J = f(lr)")
+    plt.legend()
+    plt.show()
+
