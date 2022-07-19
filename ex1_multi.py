@@ -6,6 +6,7 @@ from FeatureScaling.FeatureScaling import featureScaling
 from GradientDescent.GradientDescent import gradient_descent
 from GradientDescent.GradientDescentMulti import gradient_descent_multi
 from PlotData.plotdata import plot_convergence, plot_multi_convergence
+from normalEqn import normalEqn
 
 
 def ex1_multi():
@@ -32,7 +33,7 @@ def ex1_multi():
     input()
 
     print('Normalizing Features ...')
-    X = featureScaling(X)
+    X, mu, sigma = featureScaling(X)
     X['bias'] = [1 for _ in range(len(X))]
     X = X[['bias', 'house_size', 'br']]
 
@@ -60,7 +61,16 @@ def ex1_multi():
         J_hist.append(j)
     plot_multi_convergence(J_hist, colors, multi_alpha)
 
-    print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent): ', np.dot(np.array([1, 2104, 3]), theta))
+    print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent): ')
+    house_size, br = 2104, 3
+    x = np.array([1, (house_size - mu[0]) / sigma[0], (br - mu[1]) / sigma[1]])
+    print(np.dot(x, theta))
+
+    print('Theta computed from the normal equations: ')
+    theta_nrm = normalEqn(X, y)
+    print(f'{theta_nrm[0, 0]} \n{theta_nrm[1, 0]}\n{theta_nrm[2, 0]}')
+
+    print('Predicted price of a 1650 sq-ft, 3 br house (using normal equations):', np.dot(x, theta_nrm))
 
 
 if __name__ == '__main__':

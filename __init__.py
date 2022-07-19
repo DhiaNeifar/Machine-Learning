@@ -1,4 +1,4 @@
-from . import ex1
 from . import utils
+from . import normalEqn
 
-__all__ = ['ex1', 'utils']
+__all__ = ['normalEqn', 'utils']

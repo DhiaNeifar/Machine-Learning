@@ -1,6 +1,8 @@
 import pandas as pd
 
 
-def featureScaling(df) -> pd.DataFrame:
-    return (df - df.mean()) / df.std()
+def featureScaling(df):
+    mu = df.mean()
+    sigma = df.std()
+    return (df - mu) / sigma, mu, sigma
 

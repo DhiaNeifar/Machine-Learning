@@ -4,15 +4,15 @@
 from setuptools import setup
 
 setup(
-    name="Warmup",
+    name="Machine Learning",
     version="0.1",
     license="MIT",
     python_requires="==3.9.12",
     zip_safe=False,
     include_package_data=True,
-    packages=["WarmUp", "ex1", "PlotData", "ComputeCost", "FeatureScaling"],
+    packages=["WarmUp", "normalEq", "PlotData", "ComputeCost", "FeatureScaling"],
     package_dir={
-        "ex1": ".",
+        "normalEq": ".",
         "WarmUp": "./Warmup",
         "PlotData": "./PlotData",
         "ComputeCost": "./ComputeCost",
