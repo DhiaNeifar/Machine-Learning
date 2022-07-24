@@ -3,7 +3,6 @@ import pandas as pd
 
 
 from FeatureScaling.FeatureScaling import featureScaling
-from GradientDescent.GradientDescent import gradient_descent
 from GradientDescent.GradientDescentMulti import gradient_descent_multi
 from PlotData.plotdata import plot_convergence, plot_multi_convergence
 from normalEqn import normalEqn
@@ -26,16 +25,14 @@ def ex1_multi():
 
     print('First 10 examples from the dataset: ')
 
-    # print(X.head(10))
-    # print(y.head(10))
+    print(X.head(10))
+    print(y.head(10))
 
     print('Program paused. Press enter to continue.\n')
     input()
 
     print('Normalizing Features ...')
     X, mu, sigma = featureScaling(X)
-    X['bias'] = [1 for _ in range(len(X))]
-    X = X[['bias', 'house_size', 'br']]
 
     # ================ Part 2: Gradient Descent ================
 
