@@ -11,18 +11,22 @@ file = '/home/dhianeifar/PycharmProjects/Machine_Learning/Logistic Regression/ex
 
 def costFunction(t, x, y):
     m = x.shape[0]
+    one = np.ones((m, 1))
     H = sigmoid(np.dot(x, t))
     log_H = np.log(H)
-    J = -np.sum(y * log_H + (np.ones((m, 1)) - y) * log_H) / m
+    log_1_H = np.log(one - H)
+    J = -np.sum(y * log_H + (one - y) * log_1_H) / m
     return J, np.dot(x.T, H - y) / m
 
 
 def cost(t, x, y):
-    print(x[: 10])
-    # H = sigmoid(np.dot(x, t))
-    # log_H = np.log(H)
-    # J = -np.sum(y * log_H + (np.ones((m, 1)) - y) * log_H) / m
-    # return J
+    m = x.shape[0]
+    one = np.ones((m, 1))
+    H = sigmoid(np.dot(x, t))
+    log_H = np.log(H)
+    log_1_H = np.log(one - H)
+    J = -np.sum(y * log_H + (one - y) * log_1_H) / m
+    return J
 
 
 def sig(z):
@@ -31,20 +35,17 @@ def sig(z):
 
 def f1(t, x, y):
     m, n = x.shape
-    x_list = x.values.tolist()
-    y_list = y.values.tolist()
-
-    j = 0
+    t = t.reshape(3, 1)
+    l = []
     for i in range(m):
         h = 0
         for j in range(n):
-            h += t[j] * x_list[i][j]
+            h += t[j, 0] * x[i, j]
         H = sig(h)
         if H != 0 and H != 1:
-            j -= y_list[i][0] * log(H) + (1 - y_list[i][0]) * log(1 - H)
+            l.append(y[i, 0] * log(H) + (1 - y[i, 0]) * log(1 - H))
 
-    return j / m
-
+    return -sum(l) / m
 
 
 def f(x):
