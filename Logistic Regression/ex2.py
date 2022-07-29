@@ -3,10 +3,11 @@ import numpy as np
 import scipy.optimize as opt
 
 
-from plotData import plotData1
-from costFunction import costFunction, f, f1, cost
+from plotData import plotData1, plotDecisionBoundary
+from costFunction import costFunction, cost
 from sigmoid import sigmoid
-from utils import n_decimal_places
+from utils import n_decimal_places, n_decimal_numarray
+from predict import predict
 
 
 def ex2():
@@ -66,15 +67,26 @@ def ex2():
 
     # ==================== Part 3: Optimizing ====================
 
-    result = opt.minimize(f1, x0=np.array([0, 0, 0]), args=(X, Y))
+    result = opt.minimize(cost, x0=np.array([0, 0, 0]), args=(X, Y), method='SLSQP')
     print(result)
-    optimized_theta = result.x
-    print('Expected cost (approx): 0.203\n')
-    print('But, we found a better loss value.\n')
-    print(f'Cost at theta found by scipy.optimize: {f1(optimized_theta, X, Y)}')
+    optimized_theta = result.x.reshape(3, 1)
+    expected_cost = result.fun
+    print(f'\nOptimized theta found by scipy.optimize.minimize: {n_decimal_numarray(optimized_theta, 3)}')
+    print('Expected theta (approx): -25.161 0.206 0.201')
+    print(f'\nCost found scipy.optimize.minimize: {n_decimal_places(expected_cost, 3)}')
+    print('Expected cost (approx): 0.203')
+
+    plotDecisionBoundary(data, optimized_theta)
+
+    # ============== Part 4: Predict and Accuracies ==============
+
+    prob = sigmoid(np.dot(np.array([1, 45, 85]).reshape(1, 3), optimized_theta))
+    print(f'For a student with scores 45 and 85, we predict an admission prbability of {n_decimal_places(prob[0, 0], 3)}')
+    print('Expected value: 0.775 +/- 0.002')
+    p = predict(optimized_theta, X)
+    print(f'Train Accuracy: {np.count_nonzero(np.equal(p, Y))  * 100 / m}')
+    print('Expected accuracy (approx): 89.0\n')
 
 
 if __name__ == '__main__':
     ex2()
-
-
