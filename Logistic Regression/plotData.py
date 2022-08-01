@@ -84,7 +84,7 @@ def find_opposite_reg(lin, theta, tup) -> np.ndarray:
                 d[j] += pow(lin[elt], j - i) * theta[ind]
                 ind += 1
         bound = (-1, 1.1)
-        bnds = (bound, bound)
+        bnds = bound
         result = opt.minimize(calc, x0=np.array([0]), args=d, method='SLSQP', bounds=bnds)
         y[elt] = result.x
     return y
