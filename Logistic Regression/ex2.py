@@ -3,27 +3,27 @@ import numpy as np
 import scipy.optimize as opt
 
 
-from plotData import plotData1, plotDecisionBoundary
+from plotData import plotData, plotDecisionBoundary
 from costFunction import costFunction, cost
 from sigmoid import sigmoid
-from utils import n_decimal_places, n_decimal_numarray
+from utils import n_decimal_places, n_decimal_numarray, display
 from predict import predict
 
 
 def ex2():
 
     """
-        Machine Learning Online Class - Exercise 1: Linear Regression
+        Machine Learning Online Class - Exercise 2: Logistic Regression
     """
 
-    # ==================== Part 0: Sigmoid funciton ====================
+    # ==================== Part 0: Sigmoid function ====================
 
     print('Running warmUp exercise ... ')
 
     I = np.zeros((3, 1), dtype=float)
     I[0, 0], I[1, 0], I[2, 0] = 0.0, np.inf, -np.inf
-    print(f'Matrix:\n{I}')
-    print(sigmoid(I))
+    print(f'Matrix:\n{display(I)}')
+    print(f'applied sigmoid function on matrix I:\n{display(sigmoid(I))}')
 
     print('Program paused. Press enter to continue.')
     input()
@@ -38,7 +38,7 @@ def ex2():
 
     print('\nPlotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.\n')
 
-    plotData1(data)
+    plotData(data)
 
     print('\nProgram paused. Press enter to continue.\n')
     input()
@@ -55,12 +55,12 @@ def ex2():
     cost_null, grad_null = costFunction(initial_theta, X, y)
     print(f'Cost at initial theta:\n{n_decimal_places(cost_null, 3)}')
     print('Expected cost (approx): 0.693\n')
-    print(f'Gradient at initial theta: {n_decimal_places(grad_null[0, 0], 4)} {n_decimal_places(grad_null[1, 0], 4)} {n_decimal_places(grad_null[2, 0], 4)}')
+    print(f'Gradient at initial theta: {display(n_decimal_numarray(grad_null, 4))}')
     print('Expected gradients (approx): -0.10000 -12.0092 -11.2628\n')
     test_theta = np.zeros((n + 1, 1), dtype=float)
     test_theta[0, 0], test_theta[1, 0], test_theta[2, 0] = -24, 0.2, 0.2
     cost_test, grad_test = costFunction(test_theta, X, y)
-    print(f'Gradient at test theta: {n_decimal_places(grad_test[0, 0], 4)} {n_decimal_places(grad_test[1, 0], 4)} {n_decimal_places(grad_test[2, 0], 4)}')
+    print(f'Gradient at test theta: {display(n_decimal_numarray(grad_test, 3))}')
     print('Expected gradients (approx): 0.043 2.566 2.647')
     print('\nProgram paused. Press enter to continue.\n')
     input()
@@ -69,9 +69,9 @@ def ex2():
 
     result = opt.minimize(cost, x0=np.array([0, 0, 0]), args=(X, Y), method='SLSQP')
     print(result)
-    optimized_theta = result.x.reshape(3, 1)
+    optimized_theta = result.x.reshape(n + 1, 1)
     expected_cost = result.fun
-    print(f'\nOptimized theta found by scipy.optimize.minimize: {n_decimal_numarray(optimized_theta, 3)}')
+    print(f'\nOptimized theta found by scipy.optimize.minimize: {display(n_decimal_numarray(optimized_theta, 3))}')
     print('Expected theta (approx): -25.161 0.206 0.201')
     print(f'\nCost found scipy.optimize.minimize: {n_decimal_places(expected_cost, 3)}')
     print('Expected cost (approx): 0.203')

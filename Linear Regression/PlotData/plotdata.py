@@ -66,4 +66,3 @@ def plot_multi_convergence(J, clrs, alphas):
     plt.title("J = f(lr)")
     plt.legend()
     plt.show()
-
